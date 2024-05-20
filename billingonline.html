@@ -1,55 +1,42 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Billing</title>
-
     <script>
-
         function hitungBiaya() {
-
             // Mendapatkan nilai input dari keyboard
-
             var detikPemakaian = parseInt(document.getElementById("detik").value);
 
- 
+            // Validasi input: pastikan input merupakan angka positif
+            if (isNaN(detikPemakaian) || detikPemakaian <= 0) {
+                document.getElementById("hasil").innerHTML = "Masukkan jumlah detik yang valid.";
+                return;
+            }
 
-            // Konversi detik pemakaian ke pulsa
+            // Konversi detik pemakaian ke jam dan menit
+            var jam = Math.floor(detikPemakaian / 3600); // Jumlah jam
+            var sisaDetik = detikPemakaian % 3600; // Sisa detik setelah dikonversi ke jam
+            var menit = Math.ceil(sisaDetik / 60); // Jumlah menit
 
+            // Konversi detik pemakaian ke pulsa (45 detik per pulsa)
             var pulsa = Math.ceil(detikPemakaian / 45);
 
- 
-
-            // Hitung biaya
-
-            var biaya = pulsa * 60;
-
- 
+            // Hitung biaya (30 rupiah per pulsa)
+            var biaya = pulsa * 30;
 
             // Menampilkan hasil perhitungan
-
-            document.getElementById("hasil").innerHTML = "Biaya: " + biaya + " rupiah";
-
+            document.getElementById("hasil").innerHTML = "Waktu Pemakaian: " + jam + " jam " + menit + " menit<br>Biaya: " + biaya.toLocaleString('id-ID') + " rupiah";
         }
-
     </script>
-
 </head>
-
 <body>
-
     <h2>Online Billing</h2>
-
     <form>
-
-        Jumlah Detik Pemakaian: <input type="text" id="detik"><br>
-
+        Jumlah Detik Pemakaian: <input type="text" id="detik" placeholder="Masukkan jumlah detik"><br>
         <input type="button" value="Hitung Biaya" onclick="hitungBiaya()">
-
     </form>
-
     <div id="hasil"></div>
-
 </body>
-
 </html>
